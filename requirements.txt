@@ -1,2 +1,4 @@
 paddlepaddle
-paddlehub
+flask
+music21
+flask_cors
