@@ -59,27 +59,16 @@ dur_model = Seq2Seq.Duration_Model(
     batch_size=batch_size)
 midi_model.set_state_dict(paddle.load('Midi_Model/final_model'))
 dur_model.set_state_dict(paddle.load('Duration_Model/final_model'))
-def jiemihanshu(mima, readdata, iv):
-    secret = mima  # 由用户输入的16位或24位或32位长的初始密码字符串
-    iv = iv.encode('UTF-8')  # 随机获取16位变量
-    encrypt_data = bytes().fromhex(readdata)
-    cipher = AES.new(secret.encode('UTF-8'), AES.MODE_CBC, iv)
-    decrypt_data = cipher.decrypt(encrypt_data)
-    return decrypt_data
 def valkey(time_en):
-    if int(round(time.time() * 1000))-(int(jiemihanshu('20060815200608152006081520060815', bytes.decode(b2a_hex(base64.b64decode(time_en))),'2006081520060815').decode('UTF-8')[0:13]))<=30000:
-        return True
-    else:
-        return False
+    return True
 
 @app.route('/api', methods=['GET'])
 def test_get():
     # 解析请求参数
     param = request.args.to_dict()
     print(param)
-    key = param['time']
     input = param['input']
-    if valkey(key):
+    if valkey(1):
         if len(input) <= 100000:
             input_lyrics = input
             print(type(input))
